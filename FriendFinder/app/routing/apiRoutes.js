@@ -31,28 +31,20 @@ module.exports = function(app) {
       }
       console.log("new",newScore)
       console.log("old" , oldScore)
-      var absoluteDifference;
-      var total = [];
+      var absoluteDifference = 0;
+   
       for (var i=0; i<oldScore.length; i++) {
           console.log(oldScore[i])
           console.log(newScore[i])
-          absoluteDifference = Math.abs(newScore[i]-oldScore[i])
-          console.log("abs",absoluteDifference)
-          if(isNaN(absoluteDifference)){
-              console.log("is not num")
-          }
-          else{
-              console.log("it is")
-          }
-           total.push(absoluteDifference);
-           console.log("please",total)
+          absoluteDifference += Math.abs((newScore[i])-(oldScore[i]))
+          console.log("abs",absoluteDifference)  
+          if (absoluteDifference <= 15) {
+            console.log ("You are now friends with ", friendsData[0].name);
+        } else {
+            console.log("You are unfriendable, sorry.");
+        }   
       }
-      var tot;
-           for(var i=0; i<total.length; i++){
-             
-       tot = tot + Number(total[i])
-console.log(tot)
-           }
+     
       
    
        
@@ -60,17 +52,7 @@ console.log(tot)
     friendsData.push(newFriend);
     console.log("this is the list",friendsData)
    
-   
-   /*     var absoluteDifference;
-        for (var i=0; i<friendsData[0].scores.length; i++) {
-        absoluteDifference += Math.abs(friendsData[0].scores[i]-newFriend.scores[i])
-        console.log("this is",friendsData[0].scores)
-        if (absoluteDifference < 5) {
-            console.log ("You are now friends with ", friends[i]);
-        } else {
-            console.log("You are unfriendable, sorry.");
-        }
-    }*/
+
    
   })
 }
