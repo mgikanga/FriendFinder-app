@@ -23,36 +23,56 @@ module.exports = function(app) {
   // ---------------------------------------------------------------------------
 
   app.post("/api/friends", function(req, res) {
-      var newFriend = req.body;
-      var newScore=[];
-      var oldScore =friendsData[0].scores;
-      for(var i=0; i<newFriend.scores.length; i++){
+      //assign a variable for the new user input as the new friend
+      let newFriend = req.body;
+      //new array to push the score from the user input after converting them into numbers
+      let newScore=[];
+      let absoluteDifference = 0;
+      // array for all matches possible
+      let allMatches= [];
+      // assign a variable to the best match found
+      let bestMatch;
+      let matchName;
+      let matchPhoto;
+      for(let i=0; i<newFriend.scores.length; i++){
+          //convert the value into number and push it into the newScore array
         newScore.push(parseFloat( newFriend.scores[i]))
       }
+      //loop through the friends data to find the best match
+      for(let i = 0; i < friendsData.length; i++){
+          console.log(friendsData[i].name)
+      let oldScore =friendsData[i].scores;
       console.log("new",newScore)
       console.log("old" , oldScore)
-      var absoluteDifference = 0;
-   
-      for (var i=0; i<oldScore.length; i++) {
+      
+
+      
+      for (let i=0; i<oldScore.length; i++) {
           console.log(oldScore[i])
           console.log(newScore[i])
           absoluteDifference += Math.abs((newScore[i])-(oldScore[i]))
-          console.log("abs",absoluteDifference)  
-          if (absoluteDifference <= 15) {
-            console.log ("You are now friends with ", friendsData[0].name);
-        } else {
-            console.log("You are unfriendable, sorry.");
-        }   
+         
       }
-     
+      allMatches.push(absoluteDifference);
+    
       
-   
+          console.log("abs",allMatches)  
+          bestMatch = (Math.min(...allMatches));
+          console.log("new match", bestMatch)
+      
+        
+            console.log ("You are now friends with ", friendsData[i].name);
+            matchName = friendsData[i].name;
+            matchPhoto = friendsData[i].photo;
+            
+    }
+    
        
     
     friendsData.push(newFriend);
     console.log("this is the list",friendsData)
    
-
+    res.json({status: 'OK', matchName: matchName, matchPhoto: matchPhoto});
    
   })
 }
